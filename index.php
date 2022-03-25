@@ -17,27 +17,21 @@
   <div class="container">
   <div class="row align-items-center">
   <?php
-    $aListExtPicture = array('JPG', 'PNG', 'GIF');
+    $aListExtPicture = array('JPG', 'PNG', 'GIF', 'PNG');
     $dir    = 'IMG/';
     $dirMini    = 'IMG_MINI/';
     showPicture();
-    echo 1;
     if  (isset ($_POST['send'])){
-      echo 2;
       if(!empty($_FILES['photo'])) {
-        echo 3;
           $name = basename($_FILES["photo"]['name']);
           $ext = strtoupper(pathinfo($name,PATHINFO_EXTENSION));
           $newName = pathinfo($name,PATHINFO_FILENAME) . date('_Ymd');
-          if(!in_array($ext,$aListExtPicture)) // Отбросим все файлы - не картинки
+          if(!in_array($ext,$aListExtPicture)) {// Отбросим все файлы - не картинки
             echo "Не картинка";
-            echo 4;
             return;
-            echo 5;
-          move_uploaded_file($_FILES["photo"]['tmp_name'], $dir . "$newName".".".$ext);
-          echo $_FILES["photo"]['tmp_name'] . "<br>";
-          echo $_FILES["photo"]['tmp_name'] . $dir . "$newName".".".$ext;
-          image_resize($dir . $newFile, $dirMini . $itemFile, 100,100,100);
+          }
+          move_uploaded_file($_FILES["photo"]['tmp_name'], $dir . "$newName" . "." . $ext);
+          image_resize($dir . "$newName" . "." . $ext, $dirMini . "$newName" . "." . $ext, 100,100,100);
       };
     };
   ?>

@@ -44,14 +44,16 @@ function showPicture (){
         $aFile = explode(".", $itemFile);
         $nameFileExt = strtoupper($aFile[1]);
         if (in_array($nameFileExt, $aListExtPicture)) {
-        $ref = $dir.'/'.$itemFile;
-        //image_resize($dir.'/'.$itemFile, $dirMini.'/'.$itemFile, 100,100,100);
-        $showImage = '<div class=refPicture>';
-        $showImage = $showImage . '<a target="_blank" href=' . $ref . '>';
-        $showImage = $showImage .  '<img src="'. $dirMini . '/' . $itemFile . '" vspace="1" hspace="1">';
-        $showImage = $showImage .  '</a>';
-        $showImage = $showImage .  '</div>';
-        echo $showImage;
+            if (!file_exists($dirMini . $itemFile)){  // На случай, если сжатое изображение "потерялось"
+            image_resize($dir.'/'.$itemFile, $dirMini.'/'.$itemFile, 100,100,100);
+            }
+            $ref = $dir.'/'.$itemFile;
+            $showImage = '<div class=refPicture>';
+            $showImage = $showImage . '<a target="_blank" href=' . $ref . '>';
+            $showImage = $showImage .  '<img src="'. $dirMini . '/' . $itemFile . '" vspace="1" hspace="1">';
+            $showImage = $showImage .  '</a>';
+            $showImage = $showImage .  '</div>';
+            echo $showImage;
         };
     };
 }
