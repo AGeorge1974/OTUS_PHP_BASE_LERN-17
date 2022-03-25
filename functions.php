@@ -33,4 +33,27 @@ function image_resize(
    
     imagedestroy($destination_resource);
     imagedestroy($src_resource);
-}?>
+};
+
+function showPicture (){
+    global $dir;
+    global $dirMini;
+    global $aListExtPicture;
+    $aFiles = scandir($dir);
+    foreach ($aFiles as $itemFile) {
+        $aFile = explode(".", $itemFile);
+        $nameFileExt = strtoupper($aFile[1]);
+        if (in_array($nameFileExt, $aListExtPicture)) {
+        $ref = $dir.'/'.$itemFile;
+        //image_resize($dir.'/'.$itemFile, $dirMini.'/'.$itemFile, 100,100,100);
+        $showImage = '<div class=refPicture>';
+        $showImage = $showImage . '<a target="_blank" href=' . $ref . '>';
+        $showImage = $showImage .  '<img src="'. $dirMini . '/' . $itemFile . '" vspace="1" hspace="1">';
+        $showImage = $showImage .  '</a>';
+        $showImage = $showImage .  '</div>';
+        echo $showImage;
+        };
+    };
+}
+?>
+

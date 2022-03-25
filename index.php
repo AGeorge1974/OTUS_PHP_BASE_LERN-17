@@ -20,29 +20,24 @@
     $aListExtPicture = array('JPG', 'PNG', 'GIF');
     $dir    = 'IMG/';
     $dirMini    = 'IMG_MINI/';
-    $aFiles = scandir($dir);
-    foreach ($aFiles as $itemFile) {
-      $aFile = explode(".", $itemFile);
-      $nameFileExt = strtoupper($aFile[1]);
-      if (in_array($nameFileExt, $aListExtPicture)) {
-        $ref = $dir.'/'.$itemFile;
-        image_resize($dir.'/'.$itemFile, $dirMini.'/'.$itemFile, 100,100,100);
-        echo '<div class=refPicture>';
-        echo '<a target="_blank" href=' . $ref . '>';
-        echo '<img src="'. $dirMini . '/' . $itemFile . '" vspace="1" hspace="1">';
-        echo '</a>';
-        echo '</div>';
-      };
-    };
+    showPicture();
+    echo 1;
     if  (isset ($_POST['send'])){
+      echo 2;
       if(!empty($_FILES['photo'])) {
+        echo 3;
           $name = basename($_FILES["photo"]['name']);
           $ext = strtoupper(pathinfo($name,PATHINFO_EXTENSION));
           $newName = pathinfo($name,PATHINFO_FILENAME) . date('_Ymd');
           if(!in_array($ext,$aListExtPicture)) // Отбросим все файлы - не картинки
             echo "Не картинка";
+            echo 4;
             return;
-          move_uploaded_file($_FILES["photo"]['tmp_name'], "IMG/$newName".".".$ext);
+            echo 5;
+          move_uploaded_file($_FILES["photo"]['tmp_name'], $dir . "$newName".".".$ext);
+          echo $_FILES["photo"]['tmp_name'] . "<br>";
+          echo $_FILES["photo"]['tmp_name'] . $dir . "$newName".".".$ext;
+          image_resize($dir . $newFile, $dirMini . $itemFile, 100,100,100);
       };
     };
   ?>
